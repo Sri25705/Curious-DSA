@@ -1,0 +1,49 @@
+#first problem
+a = int(input("Enter an integer: "))
+b = input("Enter a string: ")
+c = input("Enter a character: ")
+print(a)
+print(b)
+print(c)
+
+output:Enter an integer: 8
+Enter a string: sri
+Enter a character: R
+8
+sri
+R
+
+#second problem
+a = int(input("Enter the first angle of the triangle: "))
+b = int(input("Enter the second angle of the triangle: "))
+c = int(input("Enter the third angle of the triangle: "))
+if a+b+c == 180:
+    print("Triangle can be formed")
+else:
+    print("Triangle cannot be formed")
+
+#third problem
+mark = int(input("Enter the mark of the student: "))
+if mark >= 90:
+    print("Grade A")
+elif mark>=80:
+    print("Grade B")
+elif mark>=60:
+    print("Grade C")
+elif mark>=35:
+    print("Grade D")
+else:
+    print("Fail")
+    
+#fourth problem
+def get_size(size):
+    sizes = {
+        29: "Small",
+        30: "Medium",
+        38: "Large",
+        42: "XLarge"
+    }
+    return sizes.get(size, "Invalid")
+size = int(input("Enter the size: "))
+print(get_size(size))
+
