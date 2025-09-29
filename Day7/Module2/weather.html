@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>weather forecast</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" width="width=device-width,initial-scale=1.0">
+    <style>
+        .outer{
+                margin: 100px 200px 100px 500px;
+                border:1px solid blue;
+                padding: 5px;
+                width: fit-content;
+            }
+
+            .box{
+                width: fit-content;
+                border: 1px solid black;
+                padding: 20px ;
+                border-radius: 5px;
+            }
+
+            .box input{
+                padding: 10px;
+                border-style: none;
+            }
+    </style>
+    
+    
+    
+    </head>
+
+    <body>
+        <div class="outer">
+            <div class="box">
+        <form name="myform" onclick="return myweather()">
+        
+                <h1>Weather Dashboard</h1>
+                <label for name="city"></label>
+                <input type="text" name="city" placeholder="Enter city name" width="550px"><input type="submit" value="search" style="background-color: blue;" >
+    </form>
+        <p id="display"><b> City:</b></p>
+        <p id="totalamt"><b> Temperature:</b></p>
+        <p id="add"><b> Humidity:</b></p>
+            </div>
+
+        </div>
+
+    </body>
+</html>
