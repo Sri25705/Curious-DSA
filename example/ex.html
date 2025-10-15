@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Product Inventory Management</title>
+
+  <style>
+      .outer {
+      display: grid;
+      grid-template-rows: auto auto;
+      background-color: rgb(198, 213, 218);
+    }
+
+    .one, .second {
+      background-color: white;
+      width: fit-content;
+      padding: 20px;
+      margin: 100px auto;
+      border: 2px solid blue;
+      border-radius: 6px;
+    }
+
+    input {
+      border-radius: 4px;
+      padding: 10px;
+    }
+
+    #add {
+      border-radius: 6px;
+      padding: 10px;
+      background-color: rgb(61, 61, 243);
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-top: 15px;
+    }
+
+    th, td {
+      padding: 10px;
+      border-bottom: 1px solid lightgray;
+      text-align: left;
+    }
+
+    th {
+      background-color: rgb(206, 201, 201);
+    }
+
+    @media (max-width: 780px) {
+      .outer {
+        grid-template-columns: auto;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="outer">
+    <div class="one">
+      <form name="myform" onsubmit="return addProduct(event)">
+        <h1><b>Product Inventory Management</b></h1>
+        <label>Product Name</label>
+        <input type="text" placeholder="Enter product name" name="Name" required><br><br>
+
+        <label>Quantity</label>
+        <input type="number" placeholder="Enter quantity" name="Quantity" required><br><br>
+
+        <label>Category</label>
+        <input type="text" placeholder="Enter category" name="Category" required><br><br>
+
+        <input type="submit" value="Add Product" id="add">
+      </form>
+    </div>
+
+    <div class="second">
+      <h1><b>Product Inventory Management</b></h1>
+      <table>
+        <thead>
+          <tr>
+            <th>Product Name</th>
+            <th>Quantity</th>
+            <th>Category</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="invent"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    class Product {
+      constructor(pname, quantity, category) {
+        this.pname = pname;
+        this.quantity = quantity;
+        this.category = category;
+      }
+    }
+
+    class Inventory {
+      constructor() {
+        this.products = [];
+        this.tbody = document.getElementById("invent");
+      }
+
+      addProduct(product) {
+        this.products.push(product);
+        this.updateTable();
+      }
+
+      deleteProduct(index) {
+        this.products.splice(index, 1);
+        this.updateTable();
+      }
+
+      editProduct(index) {
+        let p = this.products[index];
+        document.myform.Name.value = p.pname;
+        document.myform.Quantity.value = p.quantity;
+        document.myform.Category.value = p.category;
+
+        // Remove old entry before editing
+        this.products.splice(index, 1);
+        this.updateTable();
+      }
+
+      updateTable() {
+        this.tbody.innerHTML = "";
+        this.products.forEach((p, index) => {
+          let row = document.createElement("tr");
+
+          let namebox = document.createElement("td");
+          namebox.textContent = p.pname;
+
+          let quantitybox = document.createElement("td");
+          quantitybox.textContent = p.quantity;
+
+          let categorybox = document.createElement("td");
+          categorybox.textContent = p.category;
+
+          let actionbox = document.createElement("td");
+          let editBtn = document.createElement("button");
+          editBtn.textContent = "Edit";
+          editBtn.classList.add("action-btn");
+          editBtn.onclick = () => this.editProduct(index);
+
+          let deleteBtn = document.createElement("button");
+          deleteBtn.textContent = "Delete";
+          deleteBtn.classList.add("action-btn", "delete-btn");
+          deleteBtn.onclick = () => this.deleteProduct(index);
+
+          actionbox.appendChild(editBtn);
+          actionbox.appendChild(deleteBtn);
+
+          row.appendChild(namebox);
+          row.appendChild(quantitybox);
+          row.appendChild(categorybox);
+          row.appendChild(actionbox);
+
+          this.tbody.appendChild(row);
+        });
+      }
+    }
+
+    const inventory = new Inventory();
+
+    function addProduct(event) {
+      event.preventDefault();
+
+      let pname = document.myform.Name.value.trim();
+      let quantity = document.myform.Quantity.value.trim();
+      let category = document.myform.Category.value.trim();
+
+      if (pname && quantity && category) {
+        let newProduct = new Product(pname, quantity, category);
+        inventory.addProduct(newProduct);
+        document.myform.reset();
+      } else {
+        alert("Please fill all fields.");
+      }
+    }
+  </script>
+</body>
+</html>
